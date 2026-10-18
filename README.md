@@ -1,4 +1,4 @@
-# Eastern Med Supplies — Simple Edition
+# Eastern Med Supplies
 
 This is intentionally simplified so the website is easy to edit.
 

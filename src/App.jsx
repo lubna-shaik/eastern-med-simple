@@ -21,6 +21,12 @@ import {
 const COMPANY_EMAIL = 'info@easternmedsupplies.com';
 const COMPANY_PHONE = '+966 54 195 1966';
 const DETAILED_CATEGORIES = new Set(categories.slice(0, 4));
+const CATEGORY_GALLERY_IMAGES = {
+  'Medical Disposables': ['/images/MD2.webp', '/images/MD3.webp', '/images/MD4.jpg', '/images/MD5.jpg'],
+  'Emergency Medical Products and Supplies': ['/images/em2.jpg', '/images/em3.avif', '/images/em4.webp', '/images/em5.avif'],
+  'Hospital Scrubs and Linens': ['/images/ho2.webp', '/images/ho3.png', '/images/ho4.jpg', '/images/ho5.webp'],
+  'Blood Collection Tubes': ['/images/bl1.webp', '/images/bl2.webp', '/images/bl3.avif', '/images/bl4.webp'],
+};
 
 
 // ---------------------------------------------------------
@@ -271,14 +277,15 @@ function CategoryPage({ category }) {
               </div>
 
               <div className="category-product-gallery" aria-label={`${categoryName} product images`}>
-                {categoryProducts.slice(0, 4).map((product, index) => (
+                {CATEGORY_GALLERY_IMAGES[categoryName] ? (
+                  CATEGORY_GALLERY_IMAGES[categoryName].map((image, index) => (
+                    <div className="category-gallery-image" key={image}>
+                      <img src={image} alt={`${categoryName} product image ${index + 1}`} loading="lazy" />
+                    </div>
+                  ))
+                ) : categoryProducts.slice(0, 4).map(product => (
                   <div className="category-gallery-image" key={product.id}>
                     <img src={product.image || data.image} alt={`${product.name} - ${categoryName}`} loading="lazy" />
-                  </div>
-                ))}
-                {categoryProducts.length < 4 && Array.from({ length: 4 - categoryProducts.length }).map((_, index) => (
-                  <div className="category-gallery-image" key={`category-image-${index}`}>
-                    <img src={data.image} alt={`${categoryName} range`} loading="lazy" />
                   </div>
                 ))}
               </div>
@@ -532,9 +539,10 @@ function ServicesPage() {
 function ContactPage() {
   return <section className="contact contact-page"><div className="container contact-grid">
     <div><p className="eyebrow teal">Contact</p><h2>Get in touch with Eastern Med Supplies.</h2><p>Eastern Med Supplies provides dependable medical products and healthcare supply solutions for hospitals, clinics and institutions.</p><a className="btn light" href={`mailto:${COMPANY_EMAIL}`}><Mail size={17}/> Contact Us</a></div>
-    <div className="contact-box contact-info">
-      <div className="contact-info-item"><MapPin/><span><small>Company Address</small><address>Building No. 7759,<br/>Prince Thamer 17th Street,<br/>P.O. Box 20030, Al Shamaliya,<br/>Al Khobar 31952,<br/>Kingdom of Saudi Arabia.</address></span></div>
-      <a className="contact-info-item" href="tel:+966541951966"><Phone/><span><small>Phone</small>{COMPANY_PHONE}</span></a>
+      <div className="contact-box contact-info">
+        <div className="contact-info-item"><MapPin/><span><small>Company Address</small><address>Building No. 7759,<br/>Prince Thamer 17th Street,<br/>P.O. Box 20030, Al Shamaliya,<br/>Al Khobar 31952,<br/>Kingdom of Saudi Arabia.</address></span></div>
+        <a className="contact-info-item" href={`mailto:${COMPANY_EMAIL}`}><Mail/><span><small>EMAIL</small>{COMPANY_EMAIL}</span></a>
+        <a className="contact-info-item" href="tel:+966541951966"><Phone/><span><small>Phone</small>{COMPANY_PHONE}</span></a>
     </div>
   </div></section>;
 }
@@ -755,6 +763,7 @@ function App() {
             <strong>Eastern Med Supplies</strong>
             <p><b>Address:</b> Building No. 7759,<br/>Prince Thamer 17th Street,<br/>P.O. Box 20030, Al Shamaliya,<br/>Al Khobar 31952,<br/>Kingdom of Saudi Arabia.</p>
             <p><b>Phone:</b> <a href="tel:+966541951966">+966 54 195 1966</a></p>
+            <p><b>Email:</b> <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a></p>
           </div>
 
         </div>
